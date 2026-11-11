@@ -183,7 +183,7 @@ class MembershipTest extends LibraryTestCase
         $member = $this->member(['status_verifikasi' => 'disetujui', 'QRcode' => str_repeat('q', 64)]);
         $this->actingAs($member->user);
 
-        foreach (['192.168.1.5', '10.10.9.228'] as $address) {
+        foreach (['192.0.2.15', '198.51.100.20'] as $address) {
             $this->get("http://{$address}:8000/anggota/kartu")
                 ->assertOk()
                 ->assertViewHas('verificationUrl', 'https://perpus.example.test/anggota/verifikasi/'.str_repeat('q', 64));
