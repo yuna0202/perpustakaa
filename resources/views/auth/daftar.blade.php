@@ -83,6 +83,14 @@
                     @error('captcha')<p id="captcha-error" class="field-error" role="alert">{{ $message }}</p>@enderror
                 </fieldset>
 
+                <div class="mt-7">
+                    <label for="persetujuan_qr" class="flex cursor-pointer items-start gap-3 text-sm leading-6 text-slate-700">
+                        <input id="persetujuan_qr" name="persetujuan_qr" type="checkbox" value="1" required @checked(old('persetujuan_qr')) class="mt-1 h-4 w-4 shrink-0 rounded border-slate-300 text-sky-800 focus:ring-sky-700">
+                        <span>Saya memahami bahwa, jika disetujui, nama, foto, NIM, program studi, fakultas, tanggal terbit, dan status anggota dapat dilihat publik saat QR kartu dipindai.</span>
+                    </label>
+                    @error('persetujuan_qr')<p class="field-error mt-2" role="alert">{{ $message }}</p>@enderror
+                </div>
+
                 <div class="mt-9 flex flex-col justify-between gap-5 border-t border-slate-200 pt-7 sm:flex-row sm:items-center">
                     <p class="max-w-sm text-sm leading-6 text-slate-500">Kartu anggota tersedia setelah pendaftaran disetujui petugas.</p>
                     <button type="submit" class="btn-primary w-full shrink-0 sm:w-auto">Kirim pendaftaran</button>

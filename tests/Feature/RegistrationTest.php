@@ -88,7 +88,7 @@ class RegistrationTest extends LibraryTestCase
     public function test_registration_rejects_incomplete_and_invalid_fields(): void
     {
         $this->post(route('daftar.store'), [])->assertSessionHasErrors([
-            'nama', 'nim', 'email', 'password', 'prodi', 'captcha', 'no_hp', 'foto_stnghBadan', 'foto_KTM',
+            'nama', 'nim', 'email', 'password', 'prodi', 'persetujuan_qr', 'captcha', 'no_hp', 'foto_stnghBadan', 'foto_KTM',
         ]);
         $this->assertDatabaseCount('t_user', 0);
     }

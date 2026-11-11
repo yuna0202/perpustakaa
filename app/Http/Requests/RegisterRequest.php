@@ -29,6 +29,7 @@ class RegisterRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:255', 'unique:t_user,email'],
             'password' => ['required', 'string', 'max:255', Password::min(8)->mixedCase()->numbers()->symbols()],
             'prodi' => ['required', 'string', Rule::in(array_keys(config('program_studi')))],
+            'persetujuan_qr' => ['accepted'],
             'captcha' => ['required', 'integer', function (string $attribute, mixed $value, Closure $fail): void {
                 $challenge = $this->session()->pull('registration_captcha');
                 if (! is_array($challenge) || ! isset($challenge['answer'], $challenge['issued_at']) ||
@@ -46,7 +47,8 @@ class RegisterRequest extends FormRequest
     {
         return [
             'nama' => 'nama lengkap', 'nim' => 'NIM', 'prodi' => 'program studi',
-            'no_hp' => 'nomor HP', 'foto_stnghBadan' => 'foto setengah badan', 'foto_KTM' => 'foto KTM',
+            'no_hp' => 'nomor HP', 'persetujuan_qr' => 'persetujuan publikasi data QR',
+            'foto_stnghBadan' => 'foto setengah badan', 'foto_KTM' => 'foto KTM',
         ];
     }
 
@@ -55,6 +57,7 @@ class RegisterRequest extends FormRequest
         return [
             'email.unique' => 'Email sudah terdaftar. Silakan masuk dengan akun Anda.',
             'nim.unique' => 'NIM sudah terdaftar.',
+            'persetujuan_qr.accepted' => 'Persetujuan penggunaan data pada QR wajib dikonfirmasi.',
             'no_hp.regex' => 'Masukkan nomor HP yang valid, misalnya 081234567890.',
             'captcha.required' => 'Isi jawaban verifikasi.',
             'captcha.integer' => 'Jawaban verifikasi harus berupa angka.',

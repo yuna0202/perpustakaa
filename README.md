@@ -1,6 +1,6 @@
 # Sistem Perpustakaan Universitas Gajayana Malang
 
-Aplikasi Laravel 11 untuk pendaftaran anggota mahasiswa, validasi petugas, kartu anggota ber-QR, pengelolaan kategori/buku, serta katalog publik. Antarmuka menggunakan Blade dan Tailwind CSS dengan bahasa Indonesia. Tidak mencakup peminjaman, pengembalian, denda, reservasi, atau buku digital.
+Aplikasi Laravel 13 untuk pendaftaran anggota mahasiswa, validasi petugas, kartu anggota ber-QR, pengelolaan kategori/buku, serta katalog publik. Antarmuka menggunakan Blade dan Tailwind CSS dengan bahasa Indonesia. Tidak mencakup peminjaman, pengembalian, denda, reservasi, atau buku digital.
 
 ## Menjalankan hasil proyek di komputer ini
 
@@ -39,7 +39,7 @@ Web root Apache/Nginx wajib menunjuk folder **public**, bukan root proyek. Janga
 
 Repo GitHub membagikan source code, bukan menjalankan aplikasi. Agar orang lain langsung memakai aplikasi lewat tautan tanpa memasang Laravel, proyek perlu di-deploy ke hosting yang mendukung PHP/Laravel dan database MySQL, lalu diberi domain HTTPS. GitHub Pages tidak menjalankan aplikasi Laravel. Pengguna akan membuka alamat situs melalui browser tanpa instalasi; data dan berkas harus disiapkan di hosting secara terpisah. Atur konfigurasi produksi di environment hosting; jangan unggah `.env`, backup database, foto anggota, atau dokumen KTM ke repo. QR pada kartu harus dibuat memakai domain tersebut agar dapat dibuka dari ponsel di luar jaringan lokal.
 
-Prasyarat: PHP 8.2+ (yang diuji: 8.3), Composer 2, Node.js/npm, MySQL 8. Ekstensi PHP: PDO MySQL, PDO SQLite untuk test, mbstring, openssl, tokenizer, XML/DOM, ctype, fileinfo, GD, serta ZIP untuk Composer. Gunakan terminal Laragon agar `php` dan `composer` tersedia di PATH.
+Prasyarat: PHP 8.3+, Composer 2, Node.js/npm, MySQL 8. Ekstensi PHP: PDO MySQL, PDO SQLite untuk test, mbstring, openssl, tokenizer, XML/DOM, ctype, fileinfo, GD, serta ZIP untuk Composer. Gunakan terminal Laragon agar `php` dan `composer` tersedia di PATH.
 
 ```sh
 composer install
@@ -111,7 +111,7 @@ Jika sebelumnya telah memakai kredensial admin contoh dari versi lokal, ganti pa
 - Tanggal terbit kartu dicatat saat admin menyetujui pendaftaran; KTA dan halaman verifikasi menampilkan tanggal lengkap. Untuk persetujuan sebelum kolom ini ditambahkan, migrasi mengisi tanggal dari `updated_at` hanya jika anggota disetujui dan waktu perubahan lebih baru daripada pendaftaran. Data tanpa jejak waktu yang memadai tetap ditampilkan sebagai belum tercatat.
 - Kartu depan dan belakang memakai rasio ID‑1 85,6 × 53,98 mm. Cetak menempatkan masing-masing sisi pada halaman A4 terpisah agar dapat dicetak bolak-balik; pilih skala 100% dan balik sisi panjang. Kartu digital menampilkan foto, nama, NIM, program studi, fakultas, dan tanggal terbit.
 - Lambang kampus memakai PNG dari [situs UPT Perpustakaan Pascasarjana UNIGA](https://library.pasca.unigamalang.ac.id/images/default/logo.png), pada subdomain resmi `unigamalang.ac.id`.
-- QR memakai alamat LAN aktif dari helper atau alamat halaman kartu dan token verifikasi anggota. Pemindaian membuka halaman publik berisi kartu digital dan status anggota terbaru dari database. Halaman ini tidak menampilkan email, nomor HP, KTM, atau password. Perubahan IP setelah kartu dicetak tetap memerlukan cetak ulang kartu atau alamat domain yang stabil.
+- QR memakai alamat LAN aktif dari helper atau alamat halaman kartu dan token verifikasi anggota. Pemindaian membuka halaman publik berisi kartu digital dan status anggota terbaru dari database. Halaman ini tidak menampilkan email, nomor HP, KTM, atau password. Pendaftar harus menyetujui bahwa nama, foto, NIM, prodi, fakultas, tanggal terbit, dan status dapat dilihat melalui QR. Perubahan IP setelah kartu dicetak tetap memerlukan cetak ulang kartu atau alamat domain yang stabil.
 - Admin dapat mengirim ulang hasil verifikasi dari detail pendaftar yang sudah disetujui atau ditolak; alasan penolakan yang tersimpan ikut digunakan. Konfigurasi saat ini `MAIL_MAILER=log`, sehingga email belum dikirim ke inbox. Isi konfigurasi SMTP pada `.env` dan uji pengiriman melalui penyedia email sebelum menggunakan tombol tersebut. Aplikasi menampilkan peringatan saat masih memakai mode pengujian.
 
 ## Alur penggunaan dan pemeriksaan tiap tahap
@@ -147,6 +147,6 @@ PHPUnit memakai **SQLite in-memory** dengan `RefreshDatabase`, storage palsu, da
 
 ## Versi dependensi
 
-Versi framework dipertahankan **Laravel 11.57.1** sesuai permintaan. Saat instalasi, Composer melaporkan 5 advisory keamanan pada framework; resolver memerlukan `--no-security-blocking` untuk versi 11 yang diminta. Pengaturan audit global tidak dinonaktifkan dan lockfile disertakan. **Proyek ini ditujukan untuk pembelajaran lokal; sebelum deployment publik, migrasikan ke versi Laravel yang masih menerima perbaikan keamanan dan selesaikan temuan `composer audit`.** Jika mengubah dependency, lakukan evaluasi advisory, jangan melewati pemeriksaan keamanan tanpa meninjaunya.
+Framework diperbarui ke **Laravel 13.42.0** dengan PHP 8.3+; lockfile diperbarui bersama dependensinya. Sebelum menjalankan layanan publik, siapkan konfigurasi produksi, database baru, penyimpanan foto yang persisten, dan akun admin awal pada hosting. Jangan gunakan database atau berkas anggota lokal.
 
-Dokumentasi versi yang dipakai: [Laravel 11 authentication](https://laravel.com/docs/11.x/authentication), [filesystem](https://laravel.com/docs/11.x/filesystem), dan [middleware](https://laravel.com/docs/11.x/middleware).
+Dokumentasi versi yang dipakai: [Laravel 13 authentication](https://laravel.com/docs/13.x/authentication), [filesystem](https://laravel.com/docs/13.x/filesystem), dan [middleware](https://laravel.com/docs/13.x/middleware).

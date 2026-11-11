@@ -53,6 +53,7 @@ abstract class LibraryTestCase extends TestCase
             'password' => 'Password123!',
             'password_confirmation' => 'Password123!',
             'prodi' => 'Sistem Informasi',
+            'persetujuan_qr' => '1',
             'angkatan' => '2024',
             'no_hp' => '081222334455',
             'foto_stnghBadan' => UploadedFile::fake()->image('portrait.jpg', 100, 150),

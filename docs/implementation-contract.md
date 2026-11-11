@@ -1,6 +1,6 @@
 # Kontrak implementasi
 
-Laravel 11, Blade/Tailwind 3, MySQL. UI Indonesia, hijau tua/ivory/aksen emas. Tidak ada peminjaman, denda, reservasi, laporan, atau reset password.
+Laravel 13, Blade/Tailwind 3, MySQL. UI Indonesia, hijau tua/ivory/aksen emas. Tidak ada peminjaman, denda, reservasi, laporan, atau reset password.
 
 ## Model (parent)
 User: t_user, id_user, nama/email/password/role; anggota() hasOne. Tidak ada remember_token; login tanpa remember.
