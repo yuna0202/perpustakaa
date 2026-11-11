@@ -41,14 +41,16 @@ Repo GitHub membagikan source code, bukan menjalankan aplikasi. Agar orang lain 
 
 ### Deploy ke AutoDev AsiaHub
 
-Repo ini menyertakan `Dockerfile` dan `docker-compose.yml` untuk impor project yang sudah ada ke AutoDev. Gunakan paket **Free** dan atur project menjadi privat. Website tetap dibuka publik lewat domainnya; project privat mencegah listing di etalase komunitas. Jangan hubungkan database atau file storage ke data lokal Laragon.
+Repo ini menyertakan `Dockerfile` dan `docker-compose.yml` untuk impor project yang sudah ada ke AutoDev. Atur project menjadi privat; aplikasi tetap dapat dibuka melalui domain publiknya. Jangan hubungkan database atau file storage ke data lokal Laragon.
 
-AutoDev menjalankan web Laravel pada port 80 dan MySQL 8.4 sebagai service terpisah. Compose menyimpan database pada volume `mysql_data` serta foto anggota, KTM privat, sesi, dan file storage pada volume `app_storage`; jangan hapus kedua volume tersebut. Sebelum menjalankan project, isi environment variables berikut di dashboard AutoDev, bukan di source code:
+Pada pemeriksaan 12 November 2026, dashboard akun Free mengunci fitur **Environment Variables** untuk paket berbayar. Aplikasi ini memerlukan secret untuk `APP_KEY`, password admin, dan password database. Karena itu, paket Free belum cukup untuk menjalankan project ini dengan konfigurasi produksi yang aman. Jangan mulai project dengan nilai kosong/default atau menyimpan secret di repo publik. Project AutoDev yang dibuat untuk percobaan tidak memiliki data anggota dan sudah dihentikan.
 
-- `APP_KEY`: kunci Laravel baru untuk deployment ini. Buat melalui `php artisan key:generate --show` pada terminal terpercaya; simpan sebagai secret.
+Jika menggunakan hosting yang mendukung secret variables, Compose menjalankan web Laravel pada port 80 dan MySQL 8.4 sebagai service terpisah. Volume `mysql_data` menyimpan database; volume `app_storage` menyimpan foto anggota, KTM privat, sesi, dan file storage. Jangan hapus kedua volume tersebut. Isi environment variables di pengaturan secret milik hosting, bukan di source code:
+
+- `APP_KEY`: kunci Laravel baru untuk deployment ini.
 - `ADMIN_INITIAL_PASSWORD`: password awal admin minimal 12 karakter. Login awal menggunakan `admin@gajayana.ac.id`.
 - `DB_PASSWORD` dan `DB_ROOT_PASSWORD`: dua password database kuat dan berbeda.
-- `APP_URL` dan `MEMBERSHIP_VERIFICATION_BASE_URL`: domain HTTPS project yang ditetapkan AutoDev, tanpa garis miring di akhir.
+- `APP_URL` dan `MEMBERSHIP_VERIFICATION_BASE_URL`: domain HTTPS project yang ditetapkan hosting, tanpa garis miring di akhir.
 
 Container menjalankan migrasi dan membuat admin awal ketika mulai. Seeder deployment tidak membawa katalog contoh. Setelah deploy, ubah password awal admin dan pastikan storage serta database mempunyai backup sebelum menerima pendaftaran. Foto, NIM, KTM, dan nomor HP yang dikumpulkan dari pendaftar akan disimpan pada layanan hosting tersebut; halaman QR hanya menampilkan identitas yang dijelaskan pada persetujuan pendaftaran.
 
