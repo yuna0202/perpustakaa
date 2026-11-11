@@ -39,6 +39,19 @@ Web root Apache/Nginx wajib menunjuk folder **public**, bukan root proyek. Janga
 
 Repo GitHub membagikan source code, bukan menjalankan aplikasi. Agar orang lain langsung memakai aplikasi lewat tautan tanpa memasang Laravel, proyek perlu di-deploy ke hosting yang mendukung PHP/Laravel dan database MySQL, lalu diberi domain HTTPS. GitHub Pages tidak menjalankan aplikasi Laravel. Pengguna akan membuka alamat situs melalui browser tanpa instalasi; data dan berkas harus disiapkan di hosting secara terpisah. Atur konfigurasi produksi di environment hosting; jangan unggah `.env`, backup database, foto anggota, atau dokumen KTM ke repo. QR pada kartu harus dibuat memakai domain tersebut agar dapat dibuka dari ponsel di luar jaringan lokal.
 
+### Deploy ke AutoDev AsiaHub
+
+Repo ini menyertakan `Dockerfile` dan `docker-compose.yml` untuk impor project yang sudah ada ke AutoDev. Gunakan paket **Free** dan atur project menjadi privat. Website tetap dibuka publik lewat domainnya; project privat mencegah listing di etalase komunitas. Jangan hubungkan database atau file storage ke data lokal Laragon.
+
+AutoDev menjalankan web Laravel pada port 80 dan MySQL 8.4 sebagai service terpisah. Compose menyimpan database pada volume `mysql_data` serta foto anggota, KTM privat, sesi, dan file storage pada volume `app_storage`; jangan hapus kedua volume tersebut. Sebelum menjalankan project, isi environment variables berikut di dashboard AutoDev, bukan di source code:
+
+- `APP_KEY`: kunci Laravel baru untuk deployment ini. Buat melalui `php artisan key:generate --show` pada terminal terpercaya; simpan sebagai secret.
+- `ADMIN_INITIAL_PASSWORD`: password awal admin minimal 12 karakter. Login awal menggunakan `admin@gajayana.ac.id`.
+- `DB_PASSWORD` dan `DB_ROOT_PASSWORD`: dua password database kuat dan berbeda.
+- `APP_URL` dan `MEMBERSHIP_VERIFICATION_BASE_URL`: domain HTTPS project yang ditetapkan AutoDev, tanpa garis miring di akhir.
+
+Container menjalankan migrasi dan membuat admin awal ketika mulai. Seeder deployment tidak membawa katalog contoh. Setelah deploy, ubah password awal admin dan pastikan storage serta database mempunyai backup sebelum menerima pendaftaran. Foto, NIM, KTM, dan nomor HP yang dikumpulkan dari pendaftar akan disimpan pada layanan hosting tersebut; halaman QR hanya menampilkan identitas yang dijelaskan pada persetujuan pendaftaran.
+
 Prasyarat: PHP 8.3+, Composer 2, Node.js/npm, MySQL 8. Ekstensi PHP: PDO MySQL, PDO SQLite untuk test, mbstring, openssl, tokenizer, XML/DOM, ctype, fileinfo, GD, serta ZIP untuk Composer. Gunakan terminal Laragon agar `php` dan `composer` tersedia di PATH.
 
 ```sh
